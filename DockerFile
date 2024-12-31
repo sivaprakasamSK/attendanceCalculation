@@ -1,0 +1,15 @@
+FROM node:16-alpine
+
+WORKDIR /app
+
+
+COPY packages* .
+COPY ./prisma .
+
+RUN npm i
+RUN npx prisma generate
+
+COPY . .
+
+CMD [ "node" ,"dist/index.js"]
+
