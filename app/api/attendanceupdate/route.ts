@@ -1,9 +1,27 @@
 // route to update the absent hours by admin from the attendanceEntry page
-import { PrismaClient } from "@prisma/client"
+import { NEXT_AUTH } from "@/app/lib/auth";
+import {prisma} from "@/app/lib/prisma"
+import { getServerSession } from "next-auth";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
-    const prisma = new PrismaClient();
+
+    
+    const session = await getServerSession(NEXT_AUTH);
+    const regno = session.user.regno
+
+    const admin = prisma.admin.findUnique({
+        where:{
+            regno:regno
+        }
+    })
+
+    if(!admin){
+        alert("you are not in the admin list,so you can't update the data");
+        return Response.json({
+            message:"you are not an admin"
+        });
+    }
 
     const body = await req.json();
 
@@ -26,6 +44,9 @@ export async function POST(req: NextRequest) {
                     absentHours: totalAbsentHours
                 }
             })
+            return Response.json({
+                message:"updated successfully"
+            })
         } else {
             return Response.json({
                 message: "no Student found"
@@ -36,6 +57,4 @@ export async function POST(req: NextRequest) {
             message: "error occured while fetching the Student data"
         })
     }
-
-
 }

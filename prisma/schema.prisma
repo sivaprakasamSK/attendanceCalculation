@@ -18,10 +18,25 @@ model Student {
   name String
   password String
   absentHours Int @default(0)
+  attendances  Attendence[]
+}
+
+model Attendence{
+  id Int @id @default(autoincrement())
+  month String
+  userreg Int
+  reg Student @relation(fields: [userreg],references: [regno])
 }
 
 model Admin {
   regno Int @id
   name String
   password String
+}
+
+model Workingdays{
+  id Int @id @default(autoincrement())
+  month String
+  days Int
+  hours Int
 }
