@@ -6,7 +6,6 @@ import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
 
-    
     const session = await getServerSession(NEXT_AUTH);
     const regno = session.user.regno
 
@@ -54,7 +53,7 @@ export async function POST(req: NextRequest) {
         }
     } catch (error) {
         return Response.json({
-            message: "error occured while fetching the Student data"
+            message: "error occured while fetching the data from the DB"
         })
     }
 }

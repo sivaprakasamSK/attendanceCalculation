@@ -8,7 +8,7 @@ export default function Appbar() {
     const session = useSession();
     const router = useRouter();
     const date = new Date();
-    const month = date.getMonth();
+    const monthIndex = date.getMonth();
 
     if (!session) {
         return;
@@ -33,7 +33,7 @@ export default function Appbar() {
                     {
                         (session.status === "authenticated") && (
                             <button onClick={() => {
-                                router.push(`/attendance/view?month=${month}`);
+                                router.push(`/attendance/view?month=${monthIndex}`);
                             }}>ViewPercentage</button>
                         )
                     }

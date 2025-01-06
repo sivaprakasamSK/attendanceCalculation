@@ -1,6 +1,5 @@
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { prisma } from "@/app/lib/prisma"
-import { redirect } from 'next/dist/server/api-utils';
 
 export const NEXT_AUTH = {
     providers: [
@@ -17,20 +16,27 @@ export const NEXT_AUTH = {
 
                 const regno = parseInt(credentials.regno);
 
-                const stu = await prisma.student.findFirst({
-                    where: {
-                        regno:regno,
-                        password: credentials.password
+                try{
+                    const stu = await prisma.student.findFirst({
+                        where: {
+                            regno:regno,
+                            password: credentials.password
+                        }
+                    })
+                    if (!stu) {
+                        throw new Error("NO student found in the database");
                     }
-                })
-                if (!stu) {
-                    return null;
+                    return {
+                        id: String(stu.regno),
+                        name: stu.name,
+                    }
+                }catch(error){
+                    throw new Error("Database is currently down. Please try again later.");
                 }
 
-                return {
-                    id: String(stu.regno),
-                    name: stu.name,
-                }
+                
+
+                
             },
         })
     ],

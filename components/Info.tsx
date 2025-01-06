@@ -6,12 +6,12 @@ export default async function Info() {
 
     const session = await getServerSession(NEXT_AUTH);
     if (!session) {
-        redirect("/signin");
+        redirect("/api/auth/signin");
     }
 
     const date = new Date();
 
-    const m: string[] = ["january", "febuary", "march", "april"]
+    const m: string[] = ["January", "Febuary", "March", "April"]
     const month = m[date.getMonth()];
 
     const working = await prisma.workingdays.findFirst({
@@ -51,7 +51,7 @@ export default async function Info() {
                     {`you can take total leave of ${totalabsentDays} days ( ${totalabsentHours} hours )`}
                 </div>
                 <div>
-                    {`you already took ${stuAbsentDays} days ( ${stuAbsentHours} hours )`}
+                    {`you already took ${stuAbsentDays.toFixed(2)} days ( ${stuAbsentHours} hours )`}
                 </div>
             </div>
         </div>

@@ -60,11 +60,8 @@ export default function AttendanceEntry() {
                         regno: parseInt(regno),
                         absentHours: parseInt(absentHours)
                     })
-                    if (res.status >= 200 && res.status < 300) {
-                        alert("updated");
-                    } else {
-                        alert("not updated re-enter");
-                    }
+                    alert(res.data.message);
+
                     setAbsentHours("");
                     setRegno("");
                     setSelectedOption("");

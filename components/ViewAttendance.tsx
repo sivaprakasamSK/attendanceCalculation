@@ -10,18 +10,19 @@ export default async function ViewAttendance() {
         redirect("/signin");
     }
 
-    const m: string[] = ["january", "febuary", "march", "april"];
+    const m: string[] = ["January", "Febuary", "March", "April"];
 
-    const regno: number = session.user.regno;
+    const regno: number = parseInt(session.user.regno);
 
     const date: Date = new Date();
     const currentMonthIndex: number = date.getMonth();
     const currentMonth: string = m[currentMonthIndex]
 
 
-    const workingMonth = await prisma.workingdays.findUnique({
+
+    const workingMonth = await prisma.workingdays.findFirst({
         where: {
-            id: currentMonthIndex
+            month: currentMonth
         },
     });
 
@@ -39,9 +40,6 @@ export default async function ViewAttendance() {
     if (!stu) {
         throw new Error("can't find the student")
     }
-
-
-
     const totalWorkingDays: number = workingMonth.days;
     const totalWorkingHours: number = workingMonth.hours;
     const attenedHours: number = totalWorkingHours - stu.absentHours;
@@ -60,7 +58,7 @@ export default async function ViewAttendance() {
                     {`You(${regno}) attended ${attenedHours} hours`}
                 </div>
                 <div>
-                    {`your attendance percentage for ${currentMonth} is ${attendacePercentage}`}
+                    {`your attendance percentage for ${currentMonth} is ${attendacePercentage.toFixed(2)}`}
                 </div>
             </div>
 
