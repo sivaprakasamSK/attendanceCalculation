@@ -32,11 +32,7 @@ export const NEXT_AUTH = {
                     }
                 }catch(error){
                     throw new Error("Database is currently down. Please try again later.");
-                }
-
-                
-
-                
+                }    
             },
         })
     ],

@@ -11,6 +11,7 @@ interface ViewProps {
 
 
 export default async function View({ searchParams }: ViewProps) {
+    
 
     const session = await getServerSession(NEXT_AUTH);
     if (!session) {

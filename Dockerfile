@@ -5,7 +5,6 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY ./prisma ./prisma
-COPY .env .env
 
 
 RUN npm install
@@ -14,5 +13,5 @@ RUN npx prisma generate
 
 COPY . .
 
-CMD [ "npm","run","dev" ]
+CMD [ "npm", "run" , "dev" ]
 
